@@ -12,38 +12,38 @@ public class WaitUtility {
     public static final long EXPLICIT_WAIT=20;
     public static final long IMPLICIT_WAIT=20;
     public enum LocatorType{
-        Id,Xpath,CssSelector,Name,Tagname,Linktext,partiallinktext,ClassName;
+        Id,Xpath,CssSelector,Name,TagName,LinkText,partiallinkText,ClassName;
     }
-    public void waitForVisibilityOfElements(WebDriver driver,Enum locatortype,String target){
+    public void waitForVisibilityOfElements(WebDriver driver,Enum locatorType,String target){
         WebDriverWait wait=new WebDriverWait(driver, TimeUnit.SECONDS.toSeconds(EXPLICIT_WAIT));
-    if(locatortype.equals(LocatorType.Id)){
+    if(locatorType.equals(LocatorType.Id)){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(target)));
     }
-    else if(locatortype.equals(LocatorType.Name))
+    else if(locatorType.equals(LocatorType.Name))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(target)));
     }
-    else if(locatortype.equals(LocatorType.Xpath))
+    else if(locatorType.equals(LocatorType.Xpath))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(target)));
     }
-    else if(locatortype.equals(LocatorType.CssSelector))
+    else if(locatorType.equals(LocatorType.CssSelector))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(target)));
     }
-    else if(locatortype.equals(LocatorType.Tagname))
+    else if(locatorType.equals(LocatorType.TagName))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName(target)));
     }
-    else if(locatortype.equals(LocatorType.Linktext))
+    else if(locatorType.equals(LocatorType.LinkText))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(target)));
     }
-    else if(locatortype.equals(LocatorType.partiallinktext))
+    else if(locatorType.equals(LocatorType.partiallinkText))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(target)));
     }
-    else if (locatortype.equals(LocatorType.ClassName))
+    else if (locatorType.equals(LocatorType.ClassName))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(target)));
     }

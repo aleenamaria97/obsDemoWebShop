@@ -95,7 +95,7 @@ public class Base {
             TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
             File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
             String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            FileUtils.copyFile(screenShot, new File("./Screenshots/" + result.getName() + date + ".png"));
+            FileUtils.copyFile(screenShot, new File("./Screenshots/"+ result.getName() + date + ".png"));
         }
     }
 

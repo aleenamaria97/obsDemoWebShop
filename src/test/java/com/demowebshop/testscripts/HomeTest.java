@@ -16,7 +16,7 @@ public class HomeTest extends Base {
         String actualTitle = home.getHomePageActualTitle();
         String expectedTitle=home.getHomePageExpectedTitle();
         Assert.assertEquals(actualTitle,expectedTitle,"ERROR : INVALID HOME PAGE TITLE FOUND");
-        test.log(LogStatus.PASS, "title is same");
+        test.log(LogStatus.PASS, "Test Passed");
     }
     }
 
