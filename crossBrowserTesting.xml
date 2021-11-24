@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression Suit">
+    <listeners>
+        <listener class-name="com.demowebshop.reports.ExtentReportListener">
+        </listener>
+    </listeners>
+    <test name="chromeTest">
+        <parameter name="browser" value="chrome"/>
+                <classes>
+                    <class name="com.demowebshop.testscripts.HomeTest">
+                        <methods>
+                            <include name="verifyHomePageTitle"/>
+
+                        </methods>
+                    </class>
+                    <class name="com.demowebshop.testscripts.LoginTest">
+                        <methods>
+                            <include name="verifyLogin"/>
+                        </methods>
+                    </class>
+                    <class name="com.demowebshop.testscripts.RegisterTest">
+                        <methods>
+                            <include name="verifyUserRegistration"/>
+                        </methods>
+                    </class>
+                    <class name="com.demowebshop.testscripts.UserAccountTest">
+
+                    </class>
+                </classes>
+    </test>
+    <test name="firefoxtest">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.demowebshop.testscripts.HomeTest">
+                <methods>
+                    <include name="verifyHomePageTitle"/>
+
+                </methods>
+            </class>
+            <class name="com.demowebshop.testscripts.LoginTest">
+                <methods>
+                    <include name="verifyLogin"/>
+                </methods>
+            </class>
+            <class name="com.demowebshop.testscripts.RegisterTest">
+                <methods>
+                    <include name="verifyUserRegistration"/>
+                </methods>
+            </class>
+            <class name="com.demowebshop.testscripts.UserAccountTest">
+
+            </class>
+        </classes>
+    </test>
+    <test name="edgetest">
+        <parameter name="browser" value="edge"/>
+        <classes>
+            <class name="com.demowebshop.testscripts.HomeTest">
+                <methods>
+                    <include name="verifyHomePageTitle"/>
+
+                </methods>
+            </class>
+            <class name="com.demowebshop.testscripts.LoginTest">
+                <methods>
+                    <include name="verifyLogin"/>
+                </methods>
+            </class>
+            <class name="com.demowebshop.testscripts.RegisterTest">
+                <methods>
+                    <include name="verifyUserRegistration"/>
+                </methods>
+            </class>
+            <class name="com.demowebshop.testscripts.UserAccountTest">
+
+            </class>
+        </classes>
+    </test>
+</suite>

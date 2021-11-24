@@ -1,35 +1,35 @@
 package com.demowebshop.pages;
 
 import com.demowebshop.utilits.PageUtility;
+import com.demowebshop.utilits.TestHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
+public class LoginPage extends TestHelper {
     WebDriver driver;
-    PageUtility page = new PageUtility();
-
     public LoginPage(WebDriver driver) {
 
         this.driver = driver;
+        PageFactory.initElements(driver,this);
     }
-    private final String _userName = "//input[@id='Email']";
-    private final WebElement USERNAME = driver.findElement(By.xpath(_userName));
-    private final String _passWordLogin="//input[@id='Password']";
-    private final WebElement PASSWORD=driver.findElement(By.xpath(_passWordLogin));
-    private final String _rememberMe="//input[@id='RememberMe']";
-    private final WebElement REMEMBER=driver.findElement(By.xpath(_rememberMe));
+    private final String _userName = "Email";
+    @FindBy(id =_userName )
+    private   WebElement userName;
+    private final String _passWordLogin="Password";
+    @FindBy(id = _passWordLogin)
+    private    WebElement password;
     private final String _loginButton="//input[@class='button-1 login-button']";
-    private final WebElement LOGINBUTTON=driver.findElement(By.xpath(_loginButton));
+    @FindBy(xpath = _loginButton)
+    private   WebElement loginButton;
     public void enterUserName(String uName) {
-        page.enterText(USERNAME, uName);
-    } public void enterPassWordLogin(String pwordLogin) {
-        page.enterText(PASSWORD, pwordLogin);
-    } public void rememberMeLogin(String rememberMe) {
-        if(rememberMe.equals("True")){
-        page.clickOnElement(REMEMBER);}
-    } public UserAccountPage loginButtonClick() {
-        page.clickOnElement(LOGINBUTTON);
+        page.enterText(userName, uName);
+    } public void enterPassWordLogin(String pWordLogin) {
+        page.enterText(password, pWordLogin);
+    } public UserAccountPage clickOnLoginButton() {
+        page.clickOnElement(loginButton);
         return new UserAccountPage(driver);
     }
 

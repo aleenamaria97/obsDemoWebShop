@@ -10,21 +10,38 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
 public class EmailUtility {
 
-    public static Properties prop;
-    public static void sendEmail(String filePath, String fileName, String rMailId) {
+    public Properties prop;
+    FileInputStream file;
+    public EmailUtility(){
+        try {
+            file = new FileInputStream(System.getProperty("user.dir")+ Constants.CONFIG_FILE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         prop=new Properties();
-        final String username =prop.getProperty("EMAIL_ID");
-        final String password = prop.getProperty("PASS_WORD");
+        try {
+            prop.load(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public  void sendEmail(String filePath, String fileName, String rMailId) {
+        Properties props = new Properties();
+        final String username= prop.getProperty("email_id");
+        final String password=prop.getProperty("password");
         String eDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        Properties props = new Properties();
+
         props.put("mail.smtp.auth", true);
         props.put("mail.smtp.starttls.enable", true);
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -45,7 +62,7 @@ public class EmailUtility {
 
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(rMailId));
 
-            message.setSubject("Automation Sample Report_" + eDate);
+            message.setSubject("Demo Web Shop Project_" + eDate);
 
             BodyPart messageBodyPart = new MimeBodyPart();
             BodyPart attachmentPart = new MimeBodyPart();
@@ -56,8 +73,8 @@ public class EmailUtility {
             attachmentPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setText("Dear Stakeholder,\n" +
                     "\n" +
-                    "Please be informed that there are change in attribute values in \"Automation Sample \" application. Changes are noticed during automation execution on " + eDate + ". Attached details of changed attributes.\n" +
-                    "\n" +
+                    "These are the test results of \"Demo Web Shop Project\" . Automation execution was conducted on " + eDate + ".\n" +
+                    "\n" +"Screenshots of the results are also attached . PFA .\n"+
                     "Thanks & Regards,\n" +
                     "Automation Team");
             attachmentPart.setFileName(fileName);
@@ -66,7 +83,6 @@ public class EmailUtility {
             message.setContent(multipart);
             transport.connect();
             Transport.send(message);
-            System.out.println("MAIL TRIGGERED");
         } catch (NoSuchProviderException e) {
             e.printStackTrace();
         } catch (MessagingException e) {

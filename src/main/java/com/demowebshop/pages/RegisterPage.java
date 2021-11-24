@@ -1,37 +1,46 @@
 package com.demowebshop.pages;
 
-import com.demowebshop.utilits.PageUtility;
-import org.openqa.selenium.By;
+import com.demowebshop.utilits.TestHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
-public class RegisterPage {
+public class RegisterPage extends TestHelper {
     WebDriver driver;
-    PageUtility page = new PageUtility();
-
-    public RegisterPage(WebDriver driver) {
-
+    public RegisterPage(WebDriver driver) throws IOException {
         this.driver = driver;
+        PageFactory.initElements(driver,this);
+
     }
 
-    private String _genders = "///div[@class='gender']//label";
-    private List<WebElement> genders = driver.findElements(By.xpath(_genders));
-    private final String _fName = "//input[@id='FirstName']";
-    private final WebElement FIRSTNAME = driver.findElement(By.xpath(_fName));
-    private final String _lName = "//input[@id='LastName']";
-    private final WebElement LASTNAME = driver.findElement(By.xpath(_lName));
-    private final String _EMAIL = "//input[@id='Email']";
-    private final WebElement EMAIL = driver.findElement(By.xpath(_EMAIL));
-    private final String _PWord = "//input[@id='Password']";
-    private final WebElement PASSWORD = driver.findElement(By.xpath(_PWord));
-    private final String _CPWord = "//input[@id='ConfirmPassword']";
-    private final WebElement CPASSWORD = driver.findElement(By.xpath(_CPWord));
-    private final String _Register = "//input[@id='register-button']";
-    private final WebElement REGISTER = driver.findElement(By.xpath(_Register));
+    private final String _genders = "//div[@class='gender']//label";
+    @FindBy(xpath = _genders)
+    private List<WebElement> genders;
+    private final String _fName = "FirstName";
+    @FindBy(id = _fName)
+    private    WebElement firstName;
+    private final String _lName = "LastName";
+    @FindBy(id =_lName )
+    private    WebElement lastName;
+    private final String _EMAIL = "Email";
+    @FindBy(id =_EMAIL )
+    private   WebElement email;
+    private final String _PWord = "Password";
+    @FindBy(id = _PWord)
+    private   WebElement password;
+    private final String _CPWord = "ConfirmPassword";
+    @FindBy(id = _CPWord)
+    private   WebElement cPassword ;
+    private final String _RegisterButton = "register-button";
+    @FindBy(id = _RegisterButton)
+    private    WebElement registerButton;
 
-    public void SelectGender(String genderToSelect) {
+    public void selectGender(String genderToSelect) {
         for (int i = 0; i < genders.size(); i++) {
             String value = page.getElementText(genders.get(i));
             if (value.equals(genderToSelect)) {
@@ -41,27 +50,41 @@ public class RegisterPage {
     }
 
     public void enterFirstName(String fName) {
-        page.enterText(FIRSTNAME, fName);
+        page.enterText(firstName, fName);
     }
 
     public void enterLastName(String lName) {
-        page.enterText(LASTNAME, lName);
+        page.enterText(lastName, lName);
     }
 
-    public void enterEmail(String email) {
-        page.enterText(EMAIL, email);
+    public void enterEmail(String emailId) {
+        page.enterText(email, emailId);
     }
 
     public void enterPassWord(String pWord) {
-        page.enterText(PASSWORD, pWord);
+        page.enterText(password, pWord);
     }
 
-    public void enterCPassWord(String cpword) {
-        page.enterText(CPASSWORD, cpword);
+    public void enterCPassWord(String cPword) {
+        page.enterText(cPassword, cPword);
     }
 
-    public UserAccountPage clickOnRegister() {
-        page.clickOnElement(REGISTER);
+    public UserAccountPage clickOnRegisterButton() {
+        page.clickOnElement(registerButton);
         return new UserAccountPage(driver);
     }
+    public String randomStringGeneration(){
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        int length = 5;
+        for(int i = 0; i < length; i++) {
+            int index = random.nextInt(alphabet.length());
+            char randomChar = alphabet.charAt(index);
+            sb.append(randomChar);
+        }
+        String randomStringEmail = sb.toString()+"@gmail.com";
+        return randomStringEmail;
+    }
+
 }
