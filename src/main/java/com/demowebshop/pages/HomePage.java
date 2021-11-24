@@ -44,7 +44,6 @@ public class HomePage extends TestHelper {
         return new RegisterPage(driver);
     }
     public LoginPage clickOnLoginMenu(){
-        System.out.println(driver);
         page.clickOnElement(loginMenu);
         return new LoginPage(driver);
     }

@@ -40,7 +40,7 @@ public class RegisterTest extends Base {
         String expectedMail=user.verifyUserName();
         Assert.assertEquals(email,expectedMail,"ERROR : Login Failed");
 
-        test.log(LogStatus.PASS, "Successfully Asserted");
+        test.log(LogStatus.PASS, "Successfully registered");
     }
 
 }

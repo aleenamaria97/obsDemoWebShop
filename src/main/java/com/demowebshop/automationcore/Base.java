@@ -61,7 +61,7 @@ import java.util.Properties;
             driver.manage().window().maximize();
             driver.manage().deleteAllCookies();
            // driver.manage().timeouts().pageLoadTimeout(WaitUtility.PAGE_LOAD_WAIT, TimeUnit.SECONDS);
-        test.log(LogStatus.PASS,"Successfully initialized test");
+           test.log(LogStatus.PASS,"Successfully initialized test");
     }
     @BeforeTest
     public void errorLogin(){
@@ -84,7 +84,7 @@ import java.util.Properties;
         driver.close();
     }
     @AfterTest
-    public void endReport() {
+    public  void endReport() {
         report.endTest(test);
         report.flush();
     }

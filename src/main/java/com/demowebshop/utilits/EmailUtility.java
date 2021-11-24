@@ -74,7 +74,7 @@ public class EmailUtility {
             messageBodyPart.setText("Dear Stakeholder,\n" +
                     "\n" +
                     "These are the test results of \"Demo Web Shop Project\" . Automation execution was conducted on " + eDate + ".\n" +
-                    "\n" +"Screenshots of the results are also attached . PFA .\n"+
+                    "\n"+
                     "Thanks & Regards,\n" +
                     "Automation Team");
             attachmentPart.setFileName(fileName);

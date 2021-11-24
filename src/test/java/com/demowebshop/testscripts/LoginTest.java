@@ -6,6 +6,7 @@ import com.demowebshop.pages.HomePage;
 import com.demowebshop.pages.LoginPage;
 import com.demowebshop.pages.UserAccountPage;
 import com.demowebshop.utilits.ExcelUtility;
+import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -33,6 +34,7 @@ public class LoginTest extends Base {
         String actualUserName = "aleena97@gmail.com";
         String expectedUserName = user.verifyUserName();
         Assert.assertEquals(actualUserName, expectedUserName, "ERROR : Login Failed");
+        test.log(LogStatus.PASS, "Login Successful");
     }
 }
 
