@@ -28,10 +28,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
     public WebDriver driver;
-    FileInputStream file;
+     FileInputStream file;
     public Properties prop;
     public ExtentReports report;
-    public ExtentTest test;
+    static ExtentTest test;
     public Base() {
         try {
             file = new FileInputStream(System.getProperty("user.dir") + Constants.CONFIG_FILE);
@@ -59,12 +59,12 @@ public class Base {
         }
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
-         driver.manage().timeouts().pageLoadTimeout(WaitUtility.PAGE_LOAD_WAIT, TimeUnit.SECONDS);
+         //driver.manage().timeouts().pageLoadTimeout(WaitUtility.PAGE_LOAD_WAIT, TimeUnit.SECONDS);
     }
     @BeforeTest
     public void errorLogin(){
         report = new ExtentReports(System.getProperty("user.dir") + "//test-output//Extent.html", true);
-        test = report.startTest("DemoEwbShop");
+        test = report.startTest("DemoWebShop");
     }
     @BeforeMethod
     @Parameters("browser")
@@ -79,7 +79,7 @@ public class Base {
     public void tearDown(ITestResult result) throws IOException {
         takeScreenShot(result);
         driver.close();
-        test.log(LogStatus.PASS, " driver closed");
+        test.log(LogStatus.PASS, " successfully captured screen shot");
     }
     @AfterTest
     public void endReport() {
@@ -88,7 +88,7 @@ public class Base {
     }
     @AfterSuite
     public void sendingEmail(){
-        EmailUtility.sendEmail(System.getProperty("user.dir")+"//test-output//","Extent.html",Constants.ToEMAIL_ID);
+        EmailUtility.sendEmail(System.getProperty("user.dir")+"//test-output//","Extent.html", prop.getProperty("ToEMAIL_ID"));
     }
     public void takeScreenShot(ITestResult result) throws IOException {
         if (ITestResult.FAILURE == result.getStatus()) {

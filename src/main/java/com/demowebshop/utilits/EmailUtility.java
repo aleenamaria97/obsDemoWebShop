@@ -16,10 +16,11 @@ import java.util.Properties;
 
 public class EmailUtility {
 
-
+    public static Properties prop;
     public static void sendEmail(String filePath, String fileName, String rMailId) {
-        final String username = Constants.EMAIL_ID;
-        final String password = Constants.PASS_WORD;
+        prop=new Properties();
+        final String username =prop.getProperty("EMAIL_ID");
+        final String password = prop.getProperty("PASS_WORD");
 
         String eDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 

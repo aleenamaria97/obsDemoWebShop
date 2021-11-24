@@ -12,7 +12,7 @@ public class WaitUtility {
     public static final long EXPLICIT_WAIT=20;
     public static final long IMPLICIT_WAIT=20;
     public enum LocatorType{
-        Id,Xpath,CssSelector,Name,TagName,LinkText,partiallinkText,ClassName;
+        Id,Xpath,CssSelector,Name,TagName,LinkText,partialLinkText,ClassName;
     }
     public void waitForVisibilityOfElements(WebDriver driver,Enum locatorType,String target){
         WebDriverWait wait=new WebDriverWait(driver, TimeUnit.SECONDS.toSeconds(EXPLICIT_WAIT));
@@ -39,7 +39,7 @@ public class WaitUtility {
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(target)));
     }
-    else if(locatorType.equals(LocatorType.partiallinkText))
+    else if(locatorType.equals(LocatorType.partialLinkText))
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText(target)));
     }

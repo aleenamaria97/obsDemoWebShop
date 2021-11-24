@@ -110,4 +110,7 @@ public class PageUtility {
          select=new Select(element);
         return select.getOptions();
     }
+    public String getElementText(WebElement element){
+        return element.getText();
+    }
 }

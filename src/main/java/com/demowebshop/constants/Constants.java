@@ -1,8 +1,9 @@
 package com.demowebshop.constants;
 
 public class Constants {
-    public static final String CONFIG_FILE = "\\src\\main\\java\\com\\demowebshop\\automationcore";
-    public static final String EMAIL_ID = "aleenamariajames19976@gmail.com";
-    public static final String PASS_WORD = "#1Aleena97";
-    public static final String ToEMAIL_ID = "aleenamariya97@gmail.com";
+    public static final String CONFIG_FILE = "\\src\\main\\resources\\config.properties";
+    public static final String EXCEL_FILE_PATH="src\\main\\resources\\DemoWebShopTestData.xlsx";
+    public static final String EXCEL_SHEET_NAME="HomePage";
+    public static final String EXCEL_SHEET_REGISTER_PAGE="RegisterPage";
+    public static final String EXCEL_SHEET_LOGIN_PAGE ="LoginPage";
 }

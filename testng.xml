@@ -8,6 +8,15 @@
     <test name="Functional Test">
         <parameter name="browser" value="chrome">
         </parameter>
-        <classes/>
+                <classes>
+                    <class name="com.demowebshop.testscripts.HomeTest">
+                        <methods>
+                            <include name="verifyHomePageTitle"/>
+                        </methods>
+                    </class>
+
+                </classes>
+
+
     </test>
 </suite>
