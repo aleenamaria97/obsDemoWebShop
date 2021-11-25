@@ -3,6 +3,7 @@
 <suite name="Regression Suit">
     <listeners>
         <listener class-name="com.demowebshop.listener.TestListener"/>
+
     </listeners>
     <test name="DEMO WEB SHOP">
         <parameter name="browser" value="chrome"/>

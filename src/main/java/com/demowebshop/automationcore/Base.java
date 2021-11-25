@@ -17,14 +17,22 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
-    public class Base {
+import java.util.stream.Stream;
+
+public class Base {
         public WebDriver driver;
         FileInputStream file;
         public Properties prop;
@@ -78,20 +86,34 @@ import java.util.Properties;
         driver.close();
     }
         @AfterSuite
-        public void sendingEmail(){
-            String dateName = new SimpleDateFormat("yyyyMMdd").format(new Date());
-            email = new EmailUtility();
-            email.sendEmail(System.getProperty("user.dir")+"//TestReport//","ExtentReport_"+dateName+".html", prop.getProperty("to_email_id"));
+        public void sendingEmail() throws IOException, MessagingException {
+            List<String> filenames = new ArrayList<String>();
+
+            try (Stream<Path> filePathStream= Files.walk(Paths.get(System.getProperty("user.dir")+"//screenshots//"))) {
+                filePathStream.forEach(filePath -> {
+                    if (Files.isRegularFile(filePath)) {
+                        filenames.add(filePath.toString());
+                    }
+                });
+            }
+
+            String dateName = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            email = new EmailUtility(System.getProperty("user.dir")+"//TestReport//","ExtentReport_"+dateName+".html", prop.getProperty("to_email_id"),filenames,prop);
+            email.sendEmail();
+
+
 
         }
 
     public void takeScreenShot(ITestResult result) throws IOException {
         if (ITestResult.FAILURE == result.getStatus()) {
-            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
-            File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
-            String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            FileUtils.copyFile(screenShot, new File("./Screenshots/"+ result.getName() + date + ".png"));
-        }
-    }
 
-}
+            TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+            File screenshot = takesScreenshot.getScreenshotAs(OutputType.FILE);
+            Date date = new Date();
+            String dateFormatted = new SimpleDateFormat("dd-MM-yyyy").format(date);
+            String FileName = result.getName() + "_" + dateFormatted;
+            FileUtils.copyFile(screenshot, new File("./Screenshots/" + FileName + ".png"));
+        }
+
+    }}

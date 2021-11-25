@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ExtentReportManager {
-    static String dateName = new SimpleDateFormat("yyyyMMdd").format(new Date());
+    static String dateName = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
     public static ExtentReports extent;
     public static Platform platform;
     private static final String reportFileName = "ExtentReport_"+dateName+".html";

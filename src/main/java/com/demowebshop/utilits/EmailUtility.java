@@ -1,92 +1,80 @@
 package com.demowebshop.utilits;
 
-import com.demowebshop.constants.Constants;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 public class EmailUtility {
 
-    public Properties prop;
-    FileInputStream file;
-    public EmailUtility(){
-        try {
-            file = new FileInputStream(System.getProperty("user.dir")+ Constants.CONFIG_FILE);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        prop=new Properties();
-        try {
-            prop.load(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    String username;
+    String password;
+    String fileName;
+    String filePath;
+    String rMailId;
+    List<String> fileNames;
+    Properties props;
+
+    public EmailUtility(String filePath, String fileName, String rMailId, List<String> fileNames, Properties prop) {
+        this.username =prop.getProperty("email_id");
+        this.password = prop.getProperty("password");
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.fileNames= fileNames;
+        this.rMailId=rMailId;
+        this.props=prop;
+
     }
 
-    public  void sendEmail(String filePath, String fileName, String rMailId) {
+    public  void sendEmail() throws MessagingException, IOException {
+        String eDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         Properties props = new Properties();
-        final String username= prop.getProperty("email_id");
-        final String password=prop.getProperty("password");
-        String eDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-
-
         props.put("mail.smtp.auth", true);
         props.put("mail.smtp.starttls.enable", true);
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
+        Authenticator auth = new Authenticator() {
+            public PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
-        });
-        try {
-            Transport transport = session.getTransport();
+        };
+        Session session = Session.getInstance(props, auth);
+        String file = filePath + "//" + fileName;
+        fileNames.add(file);
 
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress("mail@gmail.com"));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(rMailId));
+        message.setSubject("Demo Web Shop_"+eDate);
 
-            MimeMessage message = new MimeMessage(session);
+        BodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setText("Dear Stakeholder,\n" +
+                "\n" +
+                "These are the test results of \"Demo Web Shop Project\" . Automation execution was conducted on " + eDate + ".\n" +
+                "\n"+
+                "Thanks & Regards,\n" +
+                "Automation Team");
 
-            message.setFrom(new InternetAddress("test@gmail.com"));
-
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(rMailId));
-
-            message.setSubject("Demo Web Shop Project_" + eDate);
-
-            BodyPart messageBodyPart = new MimeBodyPart();
-            BodyPart attachmentPart = new MimeBodyPart();
-            Multipart multipart = new MimeMultipart();
-
-            String file = filePath + "//" + fileName;
-            DataSource source = new FileDataSource(file);
-            attachmentPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setText("Dear Stakeholder,\n" +
-                    "\n" +
-                    "These are the test results of \"Demo Web Shop Project\" . Automation execution was conducted on " + eDate + ".\n" +
-                    "\n"+
-                    "Thanks & Regards,\n" +
-                    "Automation Team");
-            attachmentPart.setFileName(fileName);
-            multipart.addBodyPart(messageBodyPart);
-            multipart.addBodyPart(attachmentPart);
-            message.setContent(multipart);
-            transport.connect();
-            Transport.send(message);
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
+        for(int i=0;i<fileNames.size();i++) {
+            System.out.println(fileNames.get(i));
+            if(fileNames.get(i).contains(eDate)){
+                System.out.println("true");
+                MimeBodyPart attachmentPart = new MimeBodyPart();
+                attachmentPart.attachFile(fileNames.get(i));
+                multipart.addBodyPart(attachmentPart);
+            }
         }
+        message.setContent(multipart);
+        Transport.send(message);
     }
+
 }
