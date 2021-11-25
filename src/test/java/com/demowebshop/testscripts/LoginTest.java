@@ -35,6 +35,7 @@ public class LoginTest extends Base {
         loginPage.enterPassWordLogin(excelData.get(1));
         extentTest.get().log(Status.PASS, "password is entered");
         user= loginPage.clickOnLoginButton();
+        extentTest.get().log(Status.PASS, "login button is clicked");
         String expectedUserName = excelData.get(0);
         extentTest.get().log(Status.PASS, "expected user name is generated");
         String actualUserName = user.verifyUserName();

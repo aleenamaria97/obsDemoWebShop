@@ -30,8 +30,11 @@ public class RegisterTest extends Base {
         List<String> readExcelData = excel.readDataFromExcel(Constants.EXCEL_FILE_PATH, Constants.EXCEL_SHEET_REGISTER_PAGE);
         register=home.clickOnRegisterMenu();
         register.selectGender(readExcelData.get(0));
+        extentTest.get().log(Status.PASS, "gender is selected");
         register.enterFirstName(readExcelData.get(1));
+        extentTest.get().log(Status.PASS, "first name is entered");
         register.enterLastName(readExcelData.get(2));
+        extentTest.get().log(Status.PASS, "last name is entered");
         String email = register.randomStringGeneration();
         register.enterEmail(email);
         register.enterPassWord(readExcelData.get(4));
