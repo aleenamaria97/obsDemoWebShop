@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Regression Suit" parallel="tests" thread-count="3">
+<suite name="Regression Suit" parallel="methods" thread-count="3">
     <listeners>
-        <listener class-name="com.demowebshop.reports.ExtentReportListener">
-        </listener>
+        <listener class-name="com.demowebshop.listener.TestListener"/>
     </listeners>
     <test name="DEMOWEBSHOP">
         <parameter name="browser" value="chrome"/>
