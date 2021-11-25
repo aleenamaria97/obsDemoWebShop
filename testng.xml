@@ -15,12 +15,12 @@
                     </class>
                     <class name="com.demowebshop.testscripts.LoginTest">
                         <methods>
-                            <exclude name="verifyLogin"/>
+                            <include name="verifyLogin"/>
                         </methods>
                     </class>
                     <class name="com.demowebshop.testscripts.RegisterTest">
                         <methods>
-                            <exclude name="verifyUserRegistration"/>
+                            <include name="verifyUserRegistration"/>
                         </methods>
                     </class>
                     <class name="com.demowebshop.testscripts.UserAccountTest">
