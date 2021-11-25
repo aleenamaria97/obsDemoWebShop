@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suit">
-
+    <listeners>
+        <listener class-name="com.demowebshop.listener.TestListener"/>
+    </listeners>
     <test name="DEMO WEB SHOP">
         <parameter name="browser" value="chrome"/>
                 <classes>
@@ -13,12 +15,12 @@
                     </class>
                     <class name="com.demowebshop.testscripts.LoginTest">
                         <methods>
-                            <include name="verifyLogin"/>
+                            <exclude name="verifyLogin"/>
                         </methods>
                     </class>
                     <class name="com.demowebshop.testscripts.RegisterTest">
                         <methods>
-                            <include name="verifyUserRegistration"/>
+                            <exclude name="verifyUserRegistration"/>
                         </methods>
                     </class>
                     <class name="com.demowebshop.testscripts.UserAccountTest">

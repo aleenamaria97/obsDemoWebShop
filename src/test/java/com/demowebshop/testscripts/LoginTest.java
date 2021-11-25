@@ -1,7 +1,10 @@
 package com.demowebshop.testscripts;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.demowebshop.automationcore.Base;
 import com.demowebshop.constants.Constants;
+import com.demowebshop.listener.TestListener;
 import com.demowebshop.pages.HomePage;
 import com.demowebshop.pages.LoginPage;
 import com.demowebshop.pages.UserAccountPage;
@@ -18,10 +21,11 @@ public class LoginTest extends Base {
     ExcelUtility excel;
     UserAccountPage user;
     LoginPage loginPage;
-
+    ThreadLocal<ExtentTest> extentTest = TestListener.getTestInstance();
     @Test(priority = 2,enabled = true,description = "Verification of user registration after entering values")
     public void verifyLogin() throws IOException {
-       HomePage home=new HomePage(driver);
+        extentTest.get().assignCategory("Sanity");
+        HomePage home=new HomePage(driver);
         loginPage = home.clickOnLoginMenu();
         excel = new ExcelUtility();
         String ExcelFilePath= Constants.EXCEL_FILE_PATH;
@@ -34,7 +38,8 @@ public class LoginTest extends Base {
         String actualUserName = "aleena97@gmail.com";
         String expectedUserName = user.verifyUserName();
         Assert.assertEquals(actualUserName, expectedUserName, "ERROR : Login Failed");
-        test.log(LogStatus.PASS, "Login Successful");
+        extentTest.get().log(Status.PASS, "Verify Login Test Case Passed");
+
     }
 }
 
