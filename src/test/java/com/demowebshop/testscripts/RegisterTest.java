@@ -21,7 +21,7 @@ public class RegisterTest extends Base {
     ExcelUtility excel;
     HomePage home;
     ThreadLocal<ExtentTest> extentTest = TestListener.getTestInstance();
-    @Test(priority=2,enabled=true,description ="verification of Registration Title")
+    @Test(priority=2,enabled=true,description ="verification of Registration Title",groups = "Sanity")
     public void verifyUserRegistration() throws IOException {
         home= new HomePage(driver);
         user = new UserAccountPage(driver);
@@ -29,16 +29,17 @@ public class RegisterTest extends Base {
         excel=new ExcelUtility();
         List<String> readExcelData = excel.readDataFromExcel(Constants.EXCEL_FILE_PATH, Constants.EXCEL_SHEET_REGISTER_PAGE);
         register=home.clickOnRegisterMenu();
-        String email = register.randomStringGeneration();
         register.selectGender(readExcelData.get(0));
         register.enterFirstName(readExcelData.get(1));
         register.enterLastName(readExcelData.get(2));
+        String email = register.randomStringGeneration();
         register.enterEmail(email);
         register.enterPassWord(readExcelData.get(4));
         register.enterCPassWord(readExcelData.get(5));
         user = register.clickOnRegisterButton();
-        String expectedMail=user.verifyUserName();
-        Assert.assertEquals(email,expectedMail,"ERROR : Login Failed");
+        String actualMail=user.verifyUserName();
+        extentTest.get().log(Status.PASS, "actual mail id is generated");
+        Assert.assertEquals(actualMail,email,"ERROR : Login Failed");
         extentTest.get().log(Status.PASS, "Verify Registration Test Case Passed");
 
 

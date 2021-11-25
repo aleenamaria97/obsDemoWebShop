@@ -9,7 +9,6 @@ import com.demowebshop.pages.HomePage;
 import com.demowebshop.pages.LoginPage;
 import com.demowebshop.pages.UserAccountPage;
 import com.demowebshop.utilits.ExcelUtility;
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -22,7 +21,7 @@ public class LoginTest extends Base {
     UserAccountPage user;
     LoginPage loginPage;
     ThreadLocal<ExtentTest> extentTest = TestListener.getTestInstance();
-    @Test(priority = 2,enabled = true,description = "Verification of user registration after entering values")
+    @Test(priority = 2,enabled = true,description = "Verification of user registration after entering values",groups = "Sanity")
     public void verifyLogin() throws IOException {
         extentTest.get().assignCategory("Sanity");
         HomePage home=new HomePage(driver);
@@ -32,11 +31,14 @@ public class LoginTest extends Base {
         String ExcelSheetName=Constants.EXCEL_SHEET_LOGIN_PAGE;
         List<String> excelData = excel.readDataFromExcel(ExcelFilePath, ExcelSheetName);
         loginPage.enterUserName(excelData.get(0));
+        extentTest.get().log(Status.PASS, "email id is entered");
         loginPage.enterPassWordLogin(excelData.get(1));
+        extentTest.get().log(Status.PASS, "password is entered");
         user= loginPage.clickOnLoginButton();
-
-        String actualUserName = "aleena97@gmail.com";
-        String expectedUserName = user.verifyUserName();
+        String expectedUserName = excelData.get(0);
+        extentTest.get().log(Status.PASS, "expected user name is generated");
+        String actualUserName = user.verifyUserName();
+        extentTest.get().log(Status.PASS, "actual user name is generated");
         Assert.assertEquals(actualUserName, expectedUserName, "ERROR : Login Failed");
         extentTest.get().log(Status.PASS, "Verify Login Test Case Passed");
 

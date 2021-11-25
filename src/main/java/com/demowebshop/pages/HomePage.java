@@ -31,7 +31,6 @@ public class HomePage extends TestHelper {
     /*** user action methods ***/
     public String getActualHomePageTitle() {
         return page.getPageTitle(driver);
-
     }
 
     public String getExpectedHomePageTitle() throws IOException {
