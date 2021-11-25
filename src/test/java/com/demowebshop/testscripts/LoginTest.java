@@ -21,7 +21,7 @@ public class LoginTest extends Base {
     UserAccountPage user;
     LoginPage loginPage;
     ThreadLocal<ExtentTest> extentTest = TestListener.getTestInstance();
-    @Test(priority = 2,enabled = true,description = "Verification of user registration after entering values",groups = "Sanity")
+    @Test(priority = 2,enabled = true,description = "Verification of user registration after entering values",groups = {"Sanity"})
     public void verifyLogin() throws IOException {
         extentTest.get().assignCategory("Sanity");
         HomePage home=new HomePage(driver);
